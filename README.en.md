@@ -44,6 +44,12 @@ After adding the marketplace, install a plugin from it:
 /plugin install <plugin-name>@claude-dev-toolkit
 ```
 
+## Skill list
+
+| Skill | Description |
+| --- | --- |
+| `blueprinter` | Generates layered, color-coded technical architecture diagrams in a flat engineering blueprint style for architecture diagrams, system maps, flowcharts, and technical visualizations. |
+
 ## Design principles
 
 This repository follows a few simple principles:

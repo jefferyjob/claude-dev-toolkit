@@ -44,6 +44,12 @@
 /plugin install <plugin-name>@claude-dev-toolkit
 ```
 
+## Skill 列表
+
+| Skill | 说明 |
+| --- | --- |
+| `blueprinter` | 以扁平化工程蓝图风格生成分层彩色技术架构图，适用于架构图、系统图、流程图与技术可视化说明。 |
+
 ## 设计原则
 
 本仓库遵循以下几个简单原则：
