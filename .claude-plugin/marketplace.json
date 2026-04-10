@@ -1,0 +1,16 @@
+{
+  "name": "claude-dev-toolkit",
+  "version": "1.0.0",
+  "description": "面向开发者效率、架构制图、文档编写与工程工作流的 Claude Code 插件集合",
+  "owner": {
+    "name": "jefferyjob"
+  },
+  "plugins": [
+    {
+      "name": "blueprinter",
+      "description": "以扁平化工程蓝图风格生成分层彩色技术架构图",
+      "category": "development",
+      "source": "./plugins/blueprinter"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "blueprinter",
+  "version": "1.0.0",
+  "description": "以扁平化工程蓝图风格生成分层彩色技术架构图",
+  "author": {
+    "name": "jefferyjob"
+  }
+}
