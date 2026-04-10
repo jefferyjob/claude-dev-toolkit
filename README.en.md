@@ -48,7 +48,7 @@ After adding the marketplace, install a plugin from it:
 
 | Skill | Description |
 | --- | --- |
-| `blueprinter` | Generates layered, color-coded technical architecture diagrams in a flat engineering blueprint style for architecture diagrams, system maps, flowcharts, and technical visualizations. |
+| blueprinter | Generates layered, color-coded technical architecture diagrams in a flat engineering blueprint style for architecture diagrams, system maps, flowcharts, and technical visualizations. |
 
 ## Design principles
 
