@@ -49,6 +49,7 @@ After adding the marketplace, install a plugin from it:
 | Skill | Description |
 | --- | --- |
 | blueprinter | Generates layered, color-coded technical architecture diagrams in a flat engineering blueprint style for architecture diagrams, system maps, flowcharts, and technical visualizations. |
+| flowprinter | Generates flowcharts, sequence diagrams, state diagrams, class diagrams, Gantt charts, and other technical diagrams using Mermaid text syntax for process explanation, API interactions, and technical documentation visualization. |
 
 ## Design principles
 

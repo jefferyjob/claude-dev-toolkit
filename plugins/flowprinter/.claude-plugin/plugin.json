@@ -1,0 +1,8 @@
+{
+  "name": "flowprinter",
+  "version": "1.0.0",
+  "description": "使用 Mermaid 文本语法生成流程图、时序图、状态图、类图、甘特图等技术图表",
+  "author": {
+    "name": "jefferyjob"
+  }
+}
