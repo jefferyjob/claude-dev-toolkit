@@ -1,0 +1,138 @@
+<div class="diagram-canvas">
+  <header class="diagram-header">
+    <div class="diagram-kicker">SYSTEM MAP / V1.0 / CN</div>
+    <div class="diagram-title-row">
+      <div>
+        <h1 class="diagram-title">在线学习平台架构图</h1>
+        <p class="diagram-subtitle">从用户入口到业务编排、能力服务与数据底座的分层视图。</p>
+      </div>
+      <div class="meta-row">
+        <span class="meta-pill">Go + gRPC</span>
+        <span class="meta-pill">Production</span>
+        <span class="meta-pill">2026-04</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="flow-section">
+    <div class="flow-header">
+      <div class="flow-title">主链路 / Reading Flow</div>
+      <div class="band-tag">Flow</div>
+    </div>
+    <div class="flow-note">按入口、接入、编排到业务与能力依赖的顺序阅读整张图。</div>
+    <div class="flow-row">
+      <span class="flow-chip">Client → Gateway</span>
+      <span class="flow-chip">Gateway → Logic</span>
+      <span class="flow-chip">Logic → Domain Service</span>
+      <span class="flow-chip">Domain Service → Data / AI Capability</span>
+    </div>
+  </section>
+
+  <main class="band-stack">
+    <section class="band-section aqua">
+      <div class="band-header">
+        <div>
+          <div class="band-title">入口与角色</div>
+          <div class="band-desc">统一展示学习端、教师端、运营端与上游调用来源。</div>
+        </div>
+        <div class="band-tag">Overview</div>
+      </div>
+      <div class="band-grid">
+        <div class="band-group">
+          <div class="group-title">用户入口</div>
+          <div class="node-list">
+            <article class="node-card">
+              <div class="node-kicker">Client</div>
+              <div class="node-title">Student App / Teacher Console</div>
+              <div class="node-meta">课堂、作业、讲评、互动统一接入</div>
+            </article>
+          </div>
+        </div>
+        <div class="band-group">
+          <div class="group-title">外部调用</div>
+          <div class="node-list">
+            <article class="node-card">
+              <div class="node-kicker">Upstream</div>
+              <div class="node-title">API Gateway / Internal Services</div>
+              <div class="node-meta">统一通过 RPC 或 HTTP 进入系统</div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band-section peach">
+      <div class="band-header">
+        <div>
+          <div class="band-title">接入与编排</div>
+          <div class="band-desc">负责鉴权、路由、中间件与请求编排。</div>
+        </div>
+        <div class="band-tag">Access</div>
+      </div>
+      <div class="band-grid">
+        <div class="band-group">
+          <div class="group-title">网关能力</div>
+          <div class="node-list">
+            <article class="node-card">
+              <div class="node-kicker">Gateway</div>
+              <div class="node-title">REST / gRPC Router</div>
+              <div class="node-meta">认证、限流、参数处理、日志</div>
+            </article>
+          </div>
+        </div>
+        <div class="band-group">
+          <div class="group-title">流程编排</div>
+          <div class="node-list">
+            <article class="node-card">
+              <div class="node-kicker">Logic</div>
+              <div class="node-title">课堂流程 / 学习流程 / 任务流</div>
+              <div class="node-meta">承接业务入口并路由至域服务</div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band-section mint">
+      <div class="band-header">
+        <div>
+          <div class="band-title">业务与能力层</div>
+          <div class="band-desc">核心课程服务、LLM 能力、通知与数据处理等模块在此协同。</div>
+        </div>
+        <div class="band-tag">Domain</div>
+      </div>
+      <div class="band-grid">
+        <div class="band-group">
+          <div class="group-title">课程服务</div>
+          <div class="node-list">
+            <article class="node-card">
+              <div class="node-kicker">Service</div>
+              <div class="node-title">写作 / 文化史 / 课堂互动</div>
+              <div class="node-meta">围绕学习场景组织核心业务闭环</div>
+            </article>
+          </div>
+        </div>
+        <div class="band-group">
+          <div class="group-title">AI 与外部能力</div>
+          <div class="node-list">
+            <article class="node-card">
+              <div class="node-kicker">Capability</div>
+              <div class="node-title">LLM / TTS / IM / MQ</div>
+              <div class="node-meta">通过 RPC、消息或 SDK 接入外部能力</div>
+            </article>
+          </div>
+        </div>
+        <div class="band-group">
+          <div class="group-title">数据底座</div>
+          <div class="node-list">
+            <article class="node-card">
+              <div class="node-kicker">Data</div>
+              <div class="node-title">MySQL / Redis / Logs / Topics</div>
+              <div class="node-meta">提供存储、缓存、日志与异步链路支撑</div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

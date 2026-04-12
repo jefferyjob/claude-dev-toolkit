@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[图示标题]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-page: #f5f7fb;
+      --c-canvas: #ffffff;
+      --c-text-main: #1f2937;
+      --c-text-sub: #667085;
+      --c-line: #b8c2d1;
+      --c-node-border: #cfd7e6;
+      --c-band-aqua: #dff7f5;
+      --c-band-peach: #ffe7cf;
+      --c-band-mint: #def4df;
+      --c-band-lavender: #efe3ff;
+      --c-band-sky: #dce8ff;
+      --c-band-indigo: #d9ddff;
+      --c-group-surface: rgba(255, 255, 255, 0.58);
+      --c-node-surface: rgba(255, 255, 255, 0.9);
+      --c-strong: #344054;
+      --c-highlight: #7c3aed;
+      --radius-band: 20px;
+      --radius-group: 16px;
+      --radius-node: 14px;
+      --font-ui: 'Inter', 'Helvetica Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--c-page);
+      color: var(--c-text-main);
+      padding: 32px;
+    }
+
+    .diagram-container {
+      max-width: 99%;
+      margin: 0 auto;
+    }
+
+    .diagram-canvas {
+      background: var(--c-canvas);
+      border: 1px solid #dde3ec;
+      border-radius: 28px;
+      padding: 28px;
+    }
+
+    .diagram-header {
+      margin-bottom: 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .diagram-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--c-text-sub);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .diagram-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .diagram-title {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .diagram-subtitle {
+      max-width: 760px;
+      color: var(--c-text-sub);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta-pill {
+      border: 1px solid var(--c-node-border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      color: var(--c-text-sub);
+      font-family: var(--font-mono);
+    }
+
+    .band-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .band-section {
+      border-radius: var(--radius-band);
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+      border: 1px solid rgba(52, 64, 84, 0.08);
+    }
+
+    .band-section.aqua { background: var(--c-band-aqua); }
+    .band-section.peach { background: var(--c-band-peach); }
+    .band-section.mint { background: var(--c-band-mint); }
+    .band-section.lavender { background: var(--c-band-lavender); }
+    .band-section.sky { background: var(--c-band-sky); }
+    .band-section.indigo { background: var(--c-band-indigo); }
+
+    .band-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .band-title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .band-desc {
+      margin-top: 6px;
+      color: var(--c-text-sub);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    .band-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--c-strong);
+      border: 1px solid rgba(52, 64, 84, 0.1);
+    }
+
+    .band-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .band-group {
+      grid-column: span 4;
+      background: var(--c-group-surface);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: var(--radius-group);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      backdrop-filter: none;
+    }
+
+    .group-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .group-note {
+      font-size: 12px;
+      color: var(--c-text-sub);
+      line-height: 1.5;
+    }
+
+    .node-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .node-card {
+      background: var(--c-node-surface);
+      border: 1px solid var(--c-node-border);
+      border-radius: var(--radius-node);
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .node-kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-sub);
+    }
+
+    .node-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .node-meta {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--c-text-sub);
+    }
+
+    .flow-section {
+      margin-bottom: 18px;
+      padding: 20px;
+      border-radius: var(--radius-band);
+      background:  #f3f0ff;
+      display: grid;
+      gap: 12px;
+      border: 1px solid rgba(52, 64, 84, 0.06);
+    }
+
+    .flow-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .flow-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--c-strong);
+    }
+
+    .flow-note {
+      font-size: 12px;
+      color: var(--c-text-sub);
+      line-height: 1.5;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--c-strong);
+      font-size: 12px;
+      font-family: var(--font-mono);
+    }
+
+    .flow-chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(52, 64, 84, 0.24);
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--c-text-sub);
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(52, 64, 84, 0.14);
+    }
+
+    @media (max-width: 1100px) {
+      .band-group {
+        grid-column: span 6;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px;
+      }
+
+      .diagram-canvas {
+        border-radius: 20px;
+        padding: 18px;
+      }
+
+      .band-group {
+        grid-column: span 12;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram-container">
+    <div class="diagram-canvas">
+      <header class="diagram-header">
+        <div class="diagram-kicker">[图示类型 / LANGUAGE / VERSION]</div>
+        <div class="diagram-title-row">
+          <div>
+            <h1 class="diagram-title">[图示标题]</h1>
+            <p class="diagram-subtitle">[一句话说明系统目的、范围、阅读方式]</p>
+          </div>
+          <div class="meta-row">
+            <span class="meta-pill">[协议/技术栈]</span>
+            <span class="meta-pill">[环境]</span>
+            <span class="meta-pill">[更新时间]</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="flow-section">
+        <div class="flow-header">
+          <div class="flow-title">[主链路 / Reading Flow]</div>
+          <div class="band-tag">[Flow]</div>
+        </div>
+        <div class="flow-note">[用一行说明推荐阅读顺序、主调用路径或跨层传递方式]</div>
+        <div class="flow-row">
+          <span class="flow-chip">[Client → Gateway]</span>
+          <span class="flow-chip">[Gateway → Service]</span>
+          <span class="flow-chip">[Service → Data / Capability]</span>
+        </div>
+      </section>
+
+      <main class="band-stack">
+        <section class="band-section aqua">
+          <div class="band-header">
+            <div>
+              <div class="band-title">[顶层概览 / 入口层]</div>
+              <div class="band-desc">[说明这一层承载什么角色、入口、用户端或上游来源]</div>
+            </div>
+            <div class="band-tag">[Overview]</div>
+          </div>
+
+          <div class="band-grid">
+            <div class="band-group">
+              <div class="group-title">[用户角色 / 调用方]</div>
+              <div class="group-note">[这组模块的职责说明]</div>
+              <div class="node-list">
+                <article class="node-card">
+                  <div class="node-kicker">Role</div>
+                  <div class="node-title">[Web / App / Admin / Upstream API]</div>
+                  <div class="node-meta">[补充说明]</div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="band-section peach">
+          <div class="band-header">
+            <div>
+              <div class="band-title">[接入层 / 协议层]</div>
+              <div class="band-desc">[说明网关、协议、认证、中间件或入口控制]</div>
+            </div>
+            <div class="band-tag">[Access]</div>
+          </div>
+          <div class="band-grid">
+            <div class="band-group">...</div>
+            <div class="band-group">...</div>
+            <div class="band-group">...</div>
+          </div>
+        </section>
+
+        <section class="band-section mint">
+          <div class="band-header">
+            <div>
+              <div class="band-title">[业务层 / 服务层]</div>
+              <div class="band-desc">[说明核心域服务、逻辑模块、业务闭环]</div>
+            </div>
+            <div class="band-tag">[Domain]</div>
+          </div>
+          <div class="band-grid">
+            <div class="band-group">...</div>
+            <div class="band-group">...</div>
+            <div class="band-group">...</div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
