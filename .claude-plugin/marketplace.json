@@ -11,6 +11,12 @@
       "description": "以扁平化工程蓝图风格生成分层彩色技术架构图",
       "category": "development",
       "source": "./plugins/blueprinter"
+    },
+    {
+      "name": "flowprinter",
+      "description": "使用 Mermaid 文本语法生成流程图、时序图、状态图、类图、甘特图等技术图表",
+      "category": "development",
+      "source": "./plugins/flowprinter"
     }
   ]
 }
